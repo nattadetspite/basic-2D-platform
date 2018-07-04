@@ -36,13 +36,14 @@ public class GameSession : MonoBehaviour {
 			TakeLife();
 		}
 		else{
-			ResetGameSession();
-		}
-	}
-	private void TakeLife(){
-		playerLives--;
 		var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 		SceneManager.LoadScene(currentSceneIndex);
+		playerLives = 3;
+		livesText.text = playerLives.ToString();
+		}
+	}
+	public void TakeLife(){
+		playerLives--;
 		livesText.text = playerLives.ToString();
 	}
 	private void ResetGameSession(){

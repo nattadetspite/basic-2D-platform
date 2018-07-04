@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] float runSpeed = 10f;
 	[SerializeField] float JumpSpeed = 10f;
 	[SerializeField] float climbSpeed = 10f;
-	[SerializeField] Vector2 deathkick = new Vector2(25f, 25f);
+	[SerializeField] Vector2 deathkick = new Vector2(-30f, 15f);
 
 	bool isAlive = true;
 	Rigidbody2D myRigidBody;
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour {
 		Jump();
 		FlipSprite();
 		ClimbLadder();
-		Die();
+		Hurt();
 	}
 
 	private void Run(){
@@ -72,10 +72,11 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private void Die(){
+	private void Hurt(){
 		if(myCirclebody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Harzards"))){
 			isAlive = false;
 			myAnimator.SetTrigger("Dying");
+			StartCoroutine(Freeze());
 			GetComponent<Rigidbody2D>().velocity = deathkick;
 			FindObjectOfType<GameSession>().ProcessPlayerDeath();
 		}
@@ -88,4 +89,9 @@ public class Player : MonoBehaviour {
 			transform.localScale = new Vector2(Mathf.Sign(myRigidBody.velocity.x) * 5, 5f);
 		}
 	}
+	IEnumerator Freeze(){
+        yield return new WaitForSecondsRealtime(2);
+			isAlive = true;
+	}
+
 }
