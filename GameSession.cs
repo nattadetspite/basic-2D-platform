@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameSession : MonoBehaviour {
-	[SerializeField] int playerLives = 3;
+	[SerializeField] int playerLives = 99;
 	[SerializeField] int score = 0;
-	[SerializeField] Text livesText;
 	[SerializeField] Text scoreText;
+	[SerializeField] Text livesText;
+	[SerializeField] float coincollections = 1;
 	private void Awake(){
 		int numGameSessions = FindObjectsOfType<GameSession>().Length;
 		if(numGameSessions > 1)
@@ -25,9 +26,13 @@ public class GameSession : MonoBehaviour {
 		livesText.text = playerLives.ToString();
 		scoreText.text = score.ToString();
 	}
+	void update(){
+		
+	}
 	public void AddToScore (int pointsToAdd){
 		score = score + pointsToAdd;
 		scoreText.text = score.ToString();
+		coincollections++;
 	}
 	public void ProcessPlayerDeath()
 	{

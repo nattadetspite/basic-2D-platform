@@ -13,7 +13,6 @@ public class Player : MonoBehaviour {
 	bool isAlive = true;
 	Rigidbody2D myRigidBody;
 	Animator myAnimator;
-	CapsuleCollider2D myBodyCollider;
 	BoxCollider2D myFeet;
 	CircleCollider2D myCirclebody;
 	float gravityScaleAtStart;
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour {
 	void Start () {
 		myRigidBody = GetComponent<Rigidbody2D>();
 		myAnimator = GetComponent<Animator>();
-		myBodyCollider = GetComponent<CapsuleCollider2D>();	
 		myFeet = GetComponent<BoxCollider2D>();
 		myCirclebody = GetComponent<CircleCollider2D>();
 		gravityScaleAtStart = myRigidBody.gravityScale;
@@ -91,7 +89,7 @@ public class Player : MonoBehaviour {
 	}
 	IEnumerator Freeze(){
         yield return new WaitForSecondsRealtime(2);
-			isAlive = true;
+		isAlive = true;
 	}
 
 }
