@@ -79,6 +79,10 @@ public class Player : MonoBehaviour {
 			FindObjectOfType<GameSession>().ProcessPlayerDeath();
 		}
 	}
+	public void Kill(){
+		Vector2 jumpVelocityToAdd = new Vector2(0f, JumpSpeed);
+		myRigidBody.velocity += jumpVelocityToAdd;
+	}
 
 	private void FlipSprite(){
 		bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
