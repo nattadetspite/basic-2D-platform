@@ -8,7 +8,7 @@ public class GameSession : MonoBehaviour {
 	[SerializeField] int playerLives = 99;
 	[SerializeField] int score = 0;
 	[SerializeField] Text scoreText;
-	[SerializeField] Text livesText;
+	//[SerializeField] Text livesText;
 	[SerializeField] float coincollections = 1;
 	private void Awake(){
 		int numGameSessions = FindObjectsOfType<GameSession>().Length;
@@ -23,7 +23,7 @@ public class GameSession : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		livesText.text = playerLives.ToString();
+		//livesText.text = playerLives.ToString();
 		scoreText.text = score.ToString();
 	}
 	void update(){
@@ -44,12 +44,14 @@ public class GameSession : MonoBehaviour {
 		var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 		SceneManager.LoadScene(currentSceneIndex);
 		playerLives = 3;
-		livesText.text = playerLives.ToString();
+		//livesText.text = playerLives.ToString();
 		}
 	}
 	public void TakeLife(){
 		playerLives--;
-		livesText.text = playerLives.ToString();
+		var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(currentSceneIndex);
+		//livesText.text = playerLives.ToString();
 	}
 	private void ResetGameSession(){
 		SceneManager.LoadScene(0);

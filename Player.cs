@@ -15,7 +15,10 @@ public class Player : MonoBehaviour {
 	Animator myAnimator;
 	BoxCollider2D myFeet;
 	CircleCollider2D myCirclebody;
+	PolygonCollider2D myWeapon;
 	float gravityScaleAtStart;
+	float x;
+	private Read2UDP read2UDP;
 
 	// Use this for initialization
 	void Start () {
@@ -23,13 +26,19 @@ public class Player : MonoBehaviour {
 		myAnimator = GetComponent<Animator>();
 		myFeet = GetComponent<BoxCollider2D>();
 		myCirclebody = GetComponent<CircleCollider2D>();
+		myWeapon = GetComponent<PolygonCollider2D>();
 		gravityScaleAtStart = myRigidBody.gravityScale;
+		GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("UDPReceiver");
+		if (gameControllerObject != null)
+        {
+            read2UDP = gameControllerObject.GetComponent <Read2UDP>();
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!isAlive){ return; }
-
+		x = (float)read2UDP.dataChanged;
 		Run();
 		Jump();
 		FlipSprite();
@@ -74,14 +83,14 @@ public class Player : MonoBehaviour {
 		if(myCirclebody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Harzards"))){
 			isAlive = false;
 			myAnimator.SetTrigger("Dying");
-			StartCoroutine(Freeze());
+			//StartCoroutine(Freeze());
 			GetComponent<Rigidbody2D>().velocity = deathkick;
 			FindObjectOfType<GameSession>().ProcessPlayerDeath();
 		}
 	}
 	public void Kill(){
 		Vector2 jumpVelocityToAdd = new Vector2(0f, JumpSpeed);
-		myRigidBody.velocity += jumpVelocityToAdd;
+		myRigidBody.velocity = jumpVelocityToAdd;
 	}
 
 	private void FlipSprite(){
