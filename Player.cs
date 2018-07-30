@@ -18,6 +18,9 @@ public class Player : MonoBehaviour {
 	PolygonCollider2D myWeapon;
 	float gravityScaleAtStart;
 	float x;
+	float timer;
+	float[] timeCollect = new float[100000];
+	int i = 0;
 	private Read2UDP read2UDP;
 
 	// Use this for initialization
@@ -59,17 +62,28 @@ public class Player : MonoBehaviour {
 		if(!myCirclebody.IsTouchingLayers(LayerMask.GetMask("Climbing"))){
 			myAnimator.SetBool("Climbing", false);
 			myRigidBody.gravityScale = gravityScaleAtStart;
+			if(timer == 1){
+				timeCollect[i] = Time.timeSinceLevelLoad;
+				i++;
+				timer = 0;
+			}
 			return;
 		}
-
-		float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+		
+		//float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+		//Vector2 climbVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
+		float controlThrow = x;
 		Vector2 climbVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
 		myRigidBody.velocity = climbVelocity;
 		myRigidBody.gravityScale = 0f;
 
 		bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.y) > Mathf.Epsilon;
 		myAnimator.SetBool("Climbing", playerHasHorizontalSpeed);
-
+		if(timer == 0){
+			timeCollect[i] = Time.timeSinceLevelLoad;
+			i++;
+			timer = 1;
+		}
 	}
 	private void Jump(){
 		if(!myFeet.IsTouchingLayers(LayerMask.GetMask("Ground"))){return;}

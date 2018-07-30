@@ -10,6 +10,7 @@ public class GameSession : MonoBehaviour {
 	[SerializeField] Text scoreText;
 	//[SerializeField] Text livesText;
 	[SerializeField] float coincollections = 1;
+		float currCountdownValue = 120;
 	private void Awake(){
 		int numGameSessions = FindObjectsOfType<GameSession>().Length;
 		if(numGameSessions > 1)
@@ -27,7 +28,6 @@ public class GameSession : MonoBehaviour {
 		scoreText.text = score.ToString();
 	}
 	void update(){
-		
 	}
 	public void AddToScore (int pointsToAdd){
 		score = score + pointsToAdd;
